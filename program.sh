@@ -22,6 +22,9 @@ RecordingState="0"
 # clear the screen
 clear
 
+# Make a recordings folder.
+mkdir -p /root/ARecord/recordings
+
 # Check to make sure the USB Sound card is detected!
 # If it's not, blink the RED LED.
 CheckUSB(){
