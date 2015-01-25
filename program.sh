@@ -25,19 +25,19 @@ clear
 # Check to make sure the USB Sound card is detected!
 # If it's not, blink the RED LED.
 CheckUSB(){
-USBstatus=$(lsusb | grep "Sound" | cut -d":" -f3)
+USBstatus=$(lsusb | grep "Sound" | cut -d" " -f7)
 
-if [ "$USBstatus" = "" ]
+if [ "$USBstatus" = "C-Media" ]
 	then
-		SYSTEM="STOP"
-		BlinkError
-	else
 		clear
 		echo "[+] USB Sound Card Detected! [+]"
 		SYSTEM="GO"
 		/usr/local/bin/gpio write 6 0 #red off
 		/usr/local/bin/gpio write 4 1 #green on
 		sleep 1
+	else
+		SYSTEM="STOP"
+		BlinkError
 fi
 }
 
@@ -63,7 +63,7 @@ clear
 RecordingState="1"
 /usr/local/bin/gpio write 4 0
 /usr/local/bin/gpio write 6 1
-screen -S record -d -m arecord -D plughw:0,0 -f dat -vv /root/ARecord/recordings/$(date -d "today" +"%Y%m%d%H%M")_Input.mp3
+screen -S record -d -m arecord -D plughw:0,0 -f dat -vv /root/ARecord/recordings/$(date -d "today" +"%Y%m%d%H%M")_Input.wav
 sleep 2
 }
 
