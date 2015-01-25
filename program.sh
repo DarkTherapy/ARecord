@@ -4,6 +4,7 @@
 /usr/local/bin/gpio mode 5 in
 /usr/local/bin/gpio mode 5 down
 
+# Set GPIO pin 3 as an input for a power button.
 /usr/local/bin/gpio mode 3 in
 /usr/local/bin/gpio mode 3 down
 
@@ -56,12 +57,13 @@ done
 CheckUSB
 }
 
+# Record with Arecord to a recordings folder.
 Record(){
 clear
 RecordingState="1"
 /usr/local/bin/gpio write 4 0
 /usr/local/bin/gpio write 6 1
-screen -S record -d -m arecord -D plughw:0,0 -f cdr -vv /root/recordings/$(date -d "today" +"%Y%m%d%H%M")_Input.mp3
+screen -S record -d -m arecord -D plughw:0,0 -f cdr -vv /root/ARecord/recordings/$(date -d "today" +"%Y%m%d%H%M")_Input.mp3
 sleep 2
 }
 
