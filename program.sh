@@ -63,7 +63,7 @@ clear
 RecordingState="1"
 /usr/local/bin/gpio write 4 0
 /usr/local/bin/gpio write 6 1
-screen -S record -d -m arecord -D plughw:0,0 -f cdr -vv /root/ARecord/recordings/$(date -d "today" +"%Y%m%d%H%M")_Input.mp3
+screen -S record -d -m arecord -D plughw:0,0 -f cd -vv /root/ARecord/recordings/$(date -d "today" +"%Y%m%d%H%M")_Input.mp3
 sleep 2
 }
 
