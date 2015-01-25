@@ -33,6 +33,8 @@ USBstatus=$(lsusb | grep "Sound" | cut -d" " -f7)
 if [ "$USBstatus" = "C-Media" ]
 	then
 		clear
+		echo "USB OK"
+		sleep 5
 		SYSTEM="GO"
 		/usr/local/bin/gpio write 6 0 #red off
 		/usr/local/bin/gpio write 4 1 #green on
@@ -108,9 +110,10 @@ while [ $SYSTEM = "GO" ]
 							/usr/local/bin/gpio write 6 0 #red off
 							/usr/local/bin/gpio write 4 1 #green on
 							sleep .1
-					#done
-							halt
-							SYSTEM="STOP"
-							done
+						done
+					/usr/local/bin/gpio write 6 0 #red off
+					/usr/local/bin/gpio write 4 0 #green off
+					halt
+					SYSTEM="STOP"
 		fi
-done
+	done
