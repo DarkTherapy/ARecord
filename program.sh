@@ -12,7 +12,7 @@
 /usr/local/bin/gpio mode 4 out
 /usr/local/bin/gpio mode 6 out
 
-# Turn off the LED's.
+# Turn off both the LED's.
 /usr/local/bin/gpio write 4 0
 /usr/local/bin/gpio write 6 0
 
