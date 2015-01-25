@@ -77,8 +77,7 @@ while [ $SYSTEM = "GO" ]
 			else
 				echo "[+] Not Recording [+]"
 		fi
-		
-		
+
 		echo "[+] Waiting for a button press.. [+]"
 		if [ "$(/usr/local/bin/gpio read 5)" = "1" ] && [ $RecordingState = "0" ]
 			then
@@ -105,8 +104,9 @@ while [ $SYSTEM = "GO" ]
 							/usr/local/bin/gpio write 6 0 #red off
 							/usr/local/bin/gpio write 4 1 #green on
 							sleep .1
-					done
-					halt
-					SYSTEM="STOP"
+					#done
+							halt
+							SYSTEM="STOP"
+							done
 		fi
 done
