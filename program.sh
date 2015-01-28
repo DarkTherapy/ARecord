@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# set a var of $pin to save some typing later.
 pin="/usr/local/bin/gpio"
 
 # Set GPIO pin 5 as an input (button) and turn on its pull down resistor.
@@ -11,23 +12,23 @@ $pin mode 3 in
 $pin 3 down
 
 # Set pins 4 and 6 as outputs (green and red LED's).
-$pin mode 4 out
-$pin mode 6 out
+$pin mode 4 out #Green LED
+$pin mode 6 out #Red LED
 
 # Turn off both the LED's.
 $pin write 4 0
 $pin write 6 0
 
-# Store the recording boolean
+# Store the recording state, 0 = not recording.
 RecordingState="0"
 
 # clear the screen
 clear
 
-# Make a recordings folder.
+# Make a recordings folder (if there isn't one).
 mkdir -p /root/ARecord/recordings
 
-# Check to make sure the USB Sound card is detected!
+# Make sure the USB Sound card is detected!
 # If it's not, blink the RED LED.
 CheckUSB(){
 USBstatus=$(lsusb | grep "Sound" | cut -d" " -f7)
@@ -38,7 +39,6 @@ if [ "$USBstatus" = "C-Media" ]
 		SYSTEM="GO"
 		$pin write 6 0 #red off
 		$pin write 4 1 #green on
-		sleep 1
 	else
 		SYSTEM="STOP"
 		BlinkError
@@ -101,7 +101,6 @@ while [ $SYSTEM = "GO" ]
 				then
 					clear
 					echo "[+ ]Shutting down NOW! [+]"
-					$pin write 4 0 #green off
 					for i in `seq 1 20`;
 						do
 							$pin write 6 1 #red on
