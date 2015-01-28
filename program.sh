@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#pin=$(/usr/local/bin/gpio)
+
 # Set GPIO pin 5 as an input (button) and turn on its pull down resistor.
 /usr/local/bin/gpio mode 5 in
 /usr/local/bin/gpio mode 5 down
