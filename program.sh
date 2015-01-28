@@ -1,22 +1,22 @@
 #!/bin/bash
 
-#pin=$(/usr/local/bin/gpio)
+pin="/usr/local/bin/gpio"
 
 # Set GPIO pin 5 as an input (button) and turn on its pull down resistor.
-/usr/local/bin/gpio mode 5 in
-/usr/local/bin/gpio mode 5 down
+$pin mode 5 in
+$pin mode 5 down
 
 # Set GPIO pin 3 as an input for a power button.
-/usr/local/bin/gpio mode 3 in
-/usr/local/bin/gpio mode 3 down
+$pin mode 3 in
+$pin 3 down
 
 # Set pins 4 and 6 as outputs (green and red LED's).
-/usr/local/bin/gpio mode 4 out
-/usr/local/bin/gpio mode 6 out
+$pin mode 4 out
+$pin mode 6 out
 
 # Turn off both the LED's.
-/usr/local/bin/gpio write 4 0
-/usr/local/bin/gpio write 6 0
+$pin write 4 0
+$pin write 6 0
 
 # Store the recording boolean
 RecordingState="0"
@@ -36,8 +36,8 @@ if [ "$USBstatus" = "C-Media" ]
 	then
 		clear
 		SYSTEM="GO"
-		/usr/local/bin/gpio write 6 0 #red off
-		/usr/local/bin/gpio write 4 1 #green on
+		$pin write 6 0 #red off
+		$pin write 4 1 #green on
 		sleep 1
 	else
 		SYSTEM="STOP"
@@ -48,14 +48,14 @@ fi
 # Blink the RED LED. And output error message. Then check the USB again.
 BlinkError(){
 clear
-/usr/local/bin/gpio write 4 0 #green off
+$pin 4 0 #green off
 echo "[+] ERROR: No USB Sound Card Detected! [+]"
 
 for i in `seq 1 10`;
 	do
-		/usr/local/bin/gpio write 6 1 #red on
+		$pin write 6 1 #red on
 		sleep .1
-		/usr/local/bin/gpio write 6 0 #red off
+		$pin write 6 0 #red off
 		sleep .1
 done
 CheckUSB
@@ -65,8 +65,8 @@ CheckUSB
 Record(){
 clear
 RecordingState="1"
-/usr/local/bin/gpio write 4 0
-/usr/local/bin/gpio write 6 1
+$pin write 4 0
+$pin write 6 1
 screen -S record -d -m arecord -D plughw:0,0 -f dat -vv /root/ARecord/recordings/$(date -d "today" +"%Y%m%d%H%M")_Input.wav
 sleep 2
 }
@@ -92,8 +92,8 @@ while [ $SYSTEM = "GO" ]
 			elif [ "$(/usr/local/bin/gpio read 5)" = "1" ] && [ $RecordingState = "1" ]
 				then
 						sleep 1
-						/usr/local/bin/gpio write 6 0 #red off
-						/usr/local/bin/gpio write 4 1 #green on
+						$pin write 6 0 #red off
+						$pin write 4 1 #green on
 						screen -S record -X stuff '^C'
 						sleep 2
 						RecordingState="0"
@@ -101,18 +101,18 @@ while [ $SYSTEM = "GO" ]
 				then
 					clear
 					echo "[+ ]Shutting down NOW! [+]"
-					/usr/local/bin/gpio write 4 0 #green off
-					for i in `seq 1 10`;
+					$pin write 4 0 #green off
+					for i in `seq 1 20`;
 						do
-							/usr/local/bin/gpio write 6 1 #red on
-							/usr/local/bin/gpio write 4 0 #green off
+							$pin write 6 1 #red on
+							$pin write 4 0 #green off
 							sleep .1
-							/usr/local/bin/gpio write 6 0 #red off
-							/usr/local/bin/gpio write 4 1 #green on
+							$pin write 6 0 #red off
+							$pin write 4 1 #green on
 							sleep .1
 						done
-					/usr/local/bin/gpio write 6 0 #red off
-					/usr/local/bin/gpio write 4 0 #green off
+					$pin write 6 0 #red off
+					$pin write 4 0 #green off
 					halt
 					SYSTEM="STOP"
 		fi
