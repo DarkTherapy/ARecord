@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # set a var of $pin to save some typing later.
-pin="/usr/local/bin/gpio"
+pin=/usr/local/bin/gpio
 
 # Set GPIO pin 5 as an input (button) and turn on its pull down resistor.
 $pin mode 5 in
@@ -85,11 +85,11 @@ while [ $SYSTEM = "GO" ]
 		fi
 
 		echo "[+] Waiting for a button press.. [+]"
-		if [ "$(/usr/local/bin/gpio read 5)" = "1" ] && [ $RecordingState = "0" ]
+		if [ "$($pin read 5)" = "1" ] && [ $RecordingState = "0" ]
 			then
 				sleep .5
 				Record
-			elif [ "$(/usr/local/bin/gpio read 5)" = "1" ] && [ $RecordingState = "1" ]
+			elif [ "$($pin read 5)" = "1" ] && [ $RecordingState = "1" ]
 				then
 						sleep 1
 						$pin write 6 0 #red off
@@ -97,7 +97,7 @@ while [ $SYSTEM = "GO" ]
 						screen -S record -X stuff '^C'
 						sleep 2
 						RecordingState="0"
-			elif [ "$(/usr/local/bin/gpio read 3)" = "1" ]
+			elif [ "$($pin read 3)" = "1" ]
 				then
 					clear
 					echo "[+ ]Shutting down NOW! [+]"
