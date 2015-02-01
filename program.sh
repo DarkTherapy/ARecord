@@ -9,7 +9,7 @@ $pin mode 5 down
 
 # Set GPIO pin 3 as an input for a power button.
 $pin mode 3 in
-$pin 3 down
+$pin mode 3 down
 
 # Set pins 4 and 6 as outputs (green and red LED's).
 $pin mode 4 out #Green LED
